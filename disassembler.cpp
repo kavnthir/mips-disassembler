@@ -1,23 +1,21 @@
-#include <iostream>
-#include <fstream>
+#include "instruction.hpp"
 
-int main(int argc, char* argv[]{
-	if(!disassemble){
+int main(int argc, char* argv[]){
+	if(!disassemble(argv[1])){
 		std::cout << argv[1] << " not found.\n";
 	}
 	return 0;
 }	
 
 bool disassemble(std::string filepath){
-	ifstream input;
+	std::ifstream input;
 	std::string instruction;
 	input.open(filepath);
 	if(input.is_open()){
-		while(getline(input,instruction){
+		while(std::getline(input,instruction)){
 			//construct
 			//classify
 			//convert
-			//print
 			//output to *.s
 		}
 	}else{
