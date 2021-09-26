@@ -19,7 +19,7 @@ class Instruction{
         /**
          * Parameterized constructor
          * 
-         * @param instruction string containing instruction
+         * @param instruction string containing instruction, machine code should be in hex format
          * @param format 0 for machine code, 1 for assembly code
          */
         Instruction(std::string instruction, InstructionFormat format);
@@ -27,7 +27,7 @@ class Instruction{
         /**
          * Gets instruction line in either machine code, or assembly. 
          * 
-         * @param instruction string containing instruction
+         * @param instruction string containing instruction, machine code should be in hex format
          * @param format 0 for machine code, 1 for assembly code
          */
         void setInstruction(std::string instruction, InstructionFormat format);
