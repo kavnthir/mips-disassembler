@@ -5,11 +5,11 @@
 #include <fstream>
 #include <string>
 
+
+enum InstructionFormat {MachineCode, AssemblyCode};
+
 class Instruction{
     public:
-
-        enum InstructionFormat {MachineCode, AssemblyCode};
-        enum InstructionType {U, R, I, J};
 
         /**
          * default constructor
@@ -56,6 +56,8 @@ class Instruction{
 
     private:
 
+        enum InstructionType {U, R, I, J};
+        
         std::string MC;
         std::string AC;
 
