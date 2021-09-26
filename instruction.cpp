@@ -5,9 +5,9 @@
  * default constructor
  */
 Instruction::Instruction(){
-    this->MC = "DNE";
-    this->AC= "DNE";
-    this->type = U;
+    MC = "DNE";
+    AC= "DNE";
+    type = U;
 }
 
 /**
@@ -18,13 +18,13 @@ Instruction::Instruction(){
  */
 Instruction::Instruction(std::string instruction, InstructionFormat format){
     if(format == MachineCode){
-        this->MC = instruction;
-        this->AC = "DNE";
+        MC = instruction;
+        AC = "DNE";
     }else{
-        this->AC = instruction;
-        this->MC = "DNE";
+        AC = instruction;
+        MC = "DNE";
     }
-    this->type = U;
+    type = U;
 }
 
 /**
@@ -34,7 +34,7 @@ Instruction::Instruction(std::string instruction, InstructionFormat format){
  * @param format 0 for machine code, 1 for assembly code
  */
 void Instruction::setInstruction(std::string instruction, InstructionFormat format){
-
+    instruction = (format == MachineCode) ? MC : AC;
 }
 
 /**
@@ -44,7 +44,7 @@ void Instruction::setInstruction(std::string instruction, InstructionFormat form
  * @return string containing instruction in desired format, or "DNE" if desired format is not set.
  */
 std::string Instruction::getInstruction(InstructionFormat format){
-    return "";
+    return (format == MachineCode) ? MC : AC;
 }
 
 /**
