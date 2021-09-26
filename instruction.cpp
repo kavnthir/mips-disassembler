@@ -6,7 +6,7 @@
  */
 Instruction::Instruction(){
     MC = "DNE";
-    AC= "DNE";
+    AC = "DNE";
     type = U;
 }
 
@@ -18,7 +18,7 @@ Instruction::Instruction(){
  */
 Instruction::Instruction(std::string instruction, InstructionFormat format){
     if(format == MachineCode){
-        MC = convertRadix(instruction);
+        MC = convertRadix(instruction, 0);
         AC = "DNE";
     }else{
         AC = instruction;
@@ -35,7 +35,7 @@ Instruction::Instruction(std::string instruction, InstructionFormat format){
  */
 void Instruction::setInstruction(std::string instruction, InstructionFormat format){
     if(format == MachineCode){
-        MC = convertRadix(instruction);
+        MC = convertRadix(instruction, 0);
     }else{
         AC = instruction;
     }
@@ -66,16 +66,42 @@ bool Instruction::classifyInstruction(){
  * @return true if successfully, false otherwise
  */
 bool Instruction::convertInstruction(){
+    switch (type) {
+    case R:
+        /* code */
+        break;
+    case R0:
+        /* code */
+        break;
+    case R17:
+        /* code */
+        break;
+    case I:
+        /* code */
+        break;
+    case J:
+        /* code */
+        break;
+    case U:
+        /* code */
+        break;
+    }
     return false;
 }
 
 /**
  * Converts machine code from hex to binary
  * 
+ * @param conversion 0 for hex to binary, 1 for binary to decimal
  * @return if convertion was successfully executed
  */
-std::string Instruction::convertRadix(std::string MC){
-    std::string binary = "";
-    for(char &s: MC) binary += xtob.find(s)->second;
-    return binary;
+std::string Instruction::convertRadix(std::string MC, int conversion){
+    if(conversion){
+        std::string binary = "";
+        for(char &s: MC) binary += xtob.find(s)->second;
+        return binary;
+    }else{
+        // convert binary to decimal
+        return "";
+    }
 }
