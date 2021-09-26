@@ -1,0 +1,14 @@
+CMakeFiles/
+Debug/
+myDisassembler.dir
+x64
+ALL_BUILD.vcxproj
+ALL_BUILD.vcxproj.filters
+cmake_install.cmake
+CMakeCache.txt
+disassembler.sln
+myDisassembler.vcxproj
+myDisassembler.vcxproj.filters
+ZERO_CHECK.vcxproj
+ZERO_CHECK.vcxproj.filters
+.gitignore.swp
