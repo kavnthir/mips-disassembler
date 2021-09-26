@@ -5,7 +5,7 @@ program to convert mips machine code into assembly code
 
 ```sh
 # Configuring Cmake
-cmake .\CMakeFiles\
+cmake .\CMakeLists.txt
 
 # Building executable with cmake
 cmake --build .
