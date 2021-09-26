@@ -13,12 +13,12 @@ Instruction::Instruction(){
 /**
  * Parameterized constructor
  * 
- * @param instruction string containing instruction
+ * @param instruction string containing instruction, machine code should be in hex format
  * @param format 0 for machine code, 1 for assembly code
  */
 Instruction::Instruction(std::string instruction, InstructionFormat format){
     if(format == MachineCode){
-        MC = instruction;
+        MC = convertRadix(instruction);
         AC = "DNE";
     }else{
         AC = instruction;
@@ -30,11 +30,15 @@ Instruction::Instruction(std::string instruction, InstructionFormat format){
 /**
  * Gets instruction line in either machine code, or assembly. 
  * 
- * @param instruction string containing instruction
+ * @param instruction string containing instruction, machine code should be in hex format
  * @param format 0 for machine code, 1 for assembly code
  */
 void Instruction::setInstruction(std::string instruction, InstructionFormat format){
-    instruction = (format == MachineCode) ? MC : AC;
+    if(format == MachineCode){
+        MC = convertRadix(instruction);
+    }else{
+        AC = instruction;
+    }
 }
 
 /**
@@ -63,4 +67,15 @@ bool Instruction::classifyInstruction(){
  */
 bool Instruction::convertInstruction(){
     return false;
+}
+
+/**
+ * Converts machine code from hex to binary
+ * 
+ * @return if convertion was successfully executed
+ */
+std::string Instruction::convertRadix(std::string MC){
+    std::string binary = "";
+    for(char &s: MC) binary += xtob.find(s)->second;
+    return binary;
 }

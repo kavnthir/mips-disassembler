@@ -1,5 +1,6 @@
 CMakeFiles/
 Debug/
+.vscode/
 myDisassembler.dir
 x64
 ALL_BUILD.vcxproj
@@ -12,3 +13,4 @@ myDisassembler.vcxproj.filters
 ZERO_CHECK.vcxproj
 ZERO_CHECK.vcxproj.filters
 .gitignore.swp
+
