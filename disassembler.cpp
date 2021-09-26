@@ -20,7 +20,6 @@ bool disassemble(std::string filepath){
 	if(input.is_open()){
 		while(std::getline(input,instruction)){
 			Instruction instruction(instruction, MachineCode);
-			instruction.classifyInstruction();
 			instruction.convertInstruction();
 			std::cout << instruction.getInstruction(AssemblyCode) << "\n";
 			// store assembly code to *.s

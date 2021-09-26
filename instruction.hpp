@@ -41,13 +41,6 @@ class Instruction{
         std::string getInstruction(InstructionFormat format);
 
         /**
-         * Classifies instruction in three catagories R, I, and J.
-         * 
-         * @return if classification was successfully executed
-         */
-        bool classifyInstruction();
-
-        /**
          * Converts machine code into assembly code if possible
          * 
          * @return true if successfully, false otherwise
@@ -57,11 +50,18 @@ class Instruction{
     private:
 
         enum InstructionType {U, R, I, J};
-        
+
         std::string MC;
         std::string AC;
 
         InstructionType type;
+
+        /**
+         * Classifies instruction in three catagories R, I, and J.
+         * 
+         * @return if classification was successfully executed
+         */
+        bool classifyInstruction();
 
 };
 #endif  
