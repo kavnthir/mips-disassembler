@@ -1,19 +1,21 @@
 #include "instruction.hpp"
 
-std::map<int, std::string> labels();
+std::map<int, std::string> labels;
 
 bool disassemble(std::string filepath){
 	std::ifstream input (filepath);
 	std::string instruction;
 	if(input.is_open()){
 		std::ofstream output (filepath.substr(0, filepath.find(".obj")) +".s");
+		int PC = 0;
 		while(std::getline(input,instruction)){
-			Instruction instruction(instruction, MachineCode);
+			Instruction instruction(instruction, MachineCode, PC);
 			instruction.convertInstruction();
 			output << '\t' << instruction.getInstruction(AssemblyCode) << '\n';
 			if(instruction.linenumber != -1){
-				
+				labels.insert({instruction.linenumber, instruction.label});
 			}
+			PC++;
 		}
 		output.close();
 		input.close();

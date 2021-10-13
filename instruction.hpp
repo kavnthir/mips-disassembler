@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include <map>
 #include <bitset>
 #include <vector>
@@ -24,7 +26,7 @@ class Instruction{
          * @param instruction string containing instruction, machine code should be in hex format
          * @param format 0 for machine code, 1 for assembly code
          */
-        Instruction(std::string instruction, InstructionFormat format);
+        Instruction(std::string instruction, InstructionFormat format, int PC);
 
         /**
          * Gets instruction line in either machine code, or assembly. 
@@ -58,6 +60,7 @@ class Instruction{
 
         std::string MC;
         std::string AC;
+        int PC;
 
         InstructionType type;
 

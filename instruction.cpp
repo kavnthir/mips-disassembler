@@ -8,6 +8,7 @@ Instruction::Instruction(){
     MC = "DNE";
     AC = "DNE";
     type = U;
+    PC = 0;
     linenumber = -1;
     label = "N/A";
 }
@@ -18,7 +19,7 @@ Instruction::Instruction(){
  * @param instruction string containing instruction, machine code should be in hex format
  * @param format 0 for machine code, 1 for assembly code
  */
-Instruction::Instruction(std::string instruction, InstructionFormat format){
+Instruction::Instruction(std::string instruction, InstructionFormat format, int PC){
     if(format == MachineCode){
         MC = convertRadix(instruction, 0);
         AC = "DNE";
@@ -27,6 +28,9 @@ Instruction::Instruction(std::string instruction, InstructionFormat format){
         MC = "DNE";
     }
     type = U;
+    this->PC = PC;
+    linenumber = -1;
+    label = "N/A";
 }
 
 /**
@@ -66,16 +70,13 @@ bool Instruction::convertInstruction(){
     std::string rd = MC.substr(16, 5);
     std::string shamt = MC.substr(21, 5);
     std::string funct = MC.substr(26, 6);
-    std::string immediate = MC.substr(16, 16); //might be wrong
+    std::string immediate = MC.substr(16, 16);
     std::string address = MC.substr(6, 26); //might be wrong
 
     // Classify instruction
     if(opcode == "000000") type = R;
     else if(opcode == "000010" || opcode == "000011") type = J;
     else type = I; 
-
-    std::cout << "opcode: " << opcode << '\n';
-    std::cout << "functcode: " << funct << '\n';
 
     switch (type) {
     case R:
@@ -100,9 +101,10 @@ bool Instruction::convertInstruction(){
         }else if(opcode == "000100" || opcode == "000101"){
             AC += regcon.find(rs)->second + ", ";
             AC += regcon.find(rt)->second + ", ";
-            AC += "Addr_" + convertRadix(immediate, 2);
-            linenumber = 0;
-            label = convertRadix(immediate, 2);
+            linenumber = PC + 1 + std::stoi(convertRadix(immediate, 1));
+            label = "Addr_" + convertRadix(std::to_string(4 * (PC + 1 + std::stoi(convertRadix(immediate, 1)))), 2);
+            AC += label; 
+            label += ':';
         }else{
             AC += regcon.find(rt)->second + ", ";
             AC += regcon.find(rs)->second + ", ";
@@ -131,9 +133,19 @@ std::string Instruction::convertRadix(std::string input, int conversion){
         for(char &s: input) binary += xtob.find(s)->second;
         return binary;
     }else if(conversion == 1){
+        if(input[0] == '1'){
+            int i;
+            for (i = (int)input.length()-1 ; i >= 0 ; i--) if (input[i] == '1') break;
+            for (int k = i-1 ; k >= 0; k--){
+                if (input[k] == '1') input[k] = '0';
+                else input[k] = '1';
+            }
+            return '-' + std::to_string(std::stoi(input, nullptr, 2));
+        }
         return std::to_string(std::stoll(input, nullptr, 2));
     }else{
-        //convert decimal to hex
-        return "0000";
+        std::stringstream stream;
+        stream << std::setfill ('0') << std::setw(4) << std::hex << std::stoi(input);
+        return stream.str();
     }
 }
