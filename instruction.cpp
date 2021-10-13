@@ -28,7 +28,7 @@ Instruction::Instruction(std::string instruction, InstructionFormat format){
 }
 
 /**
- * Gets instruction line in either machine code, or assembly. 
+ * Sets instruction line in either machine code, or assembly. 
  * 
  * @param instruction string containing instruction, machine code should be in hex format
  * @param format 0 for machine code, 1 for assembly code
@@ -52,20 +52,25 @@ std::string Instruction::getInstruction(InstructionFormat format){
 }
 
 /**
- * Classifies instruction in three catagories R, I, and J.
- * 
- * @return if classification was successfully executed
- */
-bool Instruction::classifyInstruction(){
-    return false;
-}
-
-/**
  * Converts machine code into assembly code if possible
  * 
  * @return true if successfully, false otherwise
  */
 bool Instruction::convertInstruction(){
+    // Classify instruction
+    std::string opcode = MC.substr(0, 6);
+    if(opcode == "000000"){
+
+    }else if(opcode == "010001"){
+
+    }else{
+
+    }
+    // opcode = opcon.find(opcode)->second;
+
+    AC = "this is a commit :))";
+    return true;
+
     switch (type) {
     case R:
         /* code */
@@ -95,13 +100,16 @@ bool Instruction::convertInstruction(){
  * @param conversion 0 for hex to binary, 1 for binary to decimal
  * @return if convertion was successfully executed
  */
-std::string Instruction::convertRadix(std::string MC, int conversion){
-    if(conversion){
+std::string Instruction::convertRadix(std::string input, int conversion){
+    if(conversion == 0){
         std::string binary = "";
-        for(char &s: MC) binary += xtob.find(s)->second;
+        for(char &s: input) binary += xtob.find(s)->second;
         return binary;
-    }else{
+    }else if(conversion == 1){
         // convert binary to decimal
+        return "";
+    }else{
+        //convert decimal to hex
         return "";
     }
 }

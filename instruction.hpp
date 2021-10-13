@@ -56,6 +56,18 @@ class Instruction{
 
         InstructionType type;
 
+
+        /**
+         * Converts machine code from hex to binary
+         * 
+         * @param conversion 0 for hex to binary, 1 for binary to decimal
+         * @return if convertion was successfully executed
+         */
+        std::string convertRadix(std::string MC, int conversion);
+
+    private:
+
+        // used to map hexadecimal to binary
         std::map<char, std::string> xtob {
             {'0', "0000"},
             {'1', "0001"},
@@ -67,14 +79,15 @@ class Instruction{
             {'7', "0111"},
             {'8', "1000"},
             {'9', "1001"},
-            {'A', "1010"},
-            {'B', "1011"},
-            {'C', "1100"},
-            {'D', "1101"},
-            {'E', "1110"},
-            {'F', "1111"}
+            {'a', "1010"},
+            {'b', "1011"},
+            {'c', "1100"},
+            {'d', "1101"},
+            {'e', "1110"},
+            {'f', "1111"}
         };
 
+        // used to convert regular opcode to the right operations
         std::map<std::string, std::string> opcon {
             {"0000", "0000"},
             {"0001", "0001"},
@@ -94,6 +107,7 @@ class Instruction{
             {"1111", "1111"}
         };
 
+        // used to map register numbers in binary to $X format
         std::map<std::string, std::string> regcon {
             {"0000", "0000"},
             {"0001", "0001"},
@@ -113,6 +127,7 @@ class Instruction{
             {"1111", "1111"}
         };
 
+        // used to map func0 code to the right operation
         std::map<std::string, std::string> funccon0 {
             {"0000", "0000"},
             {"0001", "0001"},
@@ -132,6 +147,7 @@ class Instruction{
             {"1111", "1111"}
         };
 
+        // used to map func17 code to the right operation
         std::map<std::string, std::string> funccon17 {
             {"0000", "0000"},
             {"0001", "0001"},
@@ -151,21 +167,24 @@ class Instruction{
             {"1111", "1111"}
         };
 
-        /**
-         * Classifies instruction in three catagories R, I, and J.
-         * 
-         * @return if classification was successfully executed
-         */
-        bool classifyInstruction();
-
-        /**
-         * Converts machine code from hex to binary
-         * 
-         * @param conversion 0 for hex to binary, 1 for binary to decimal
-         * @return if convertion was successfully executed
-         */
-        std::string convertRadix(std::string MC, int conversion);
-
-
+        // used to map opcode to type
+        std::map<std::string, std::string> otot {
+            {"0000", "0000"},
+            {"0001", "0001"},
+            {"0010", "0010"},
+            {"0011", "0011"},
+            {"0100", "0100"},
+            {"0101", "0101"},
+            {"0110", "0110"},
+            {"0111", "0111"},
+            {"1000", "1000"},
+            {"1001", "1001"},
+            {"1010", "1010"},
+            {"1011", "1011"},
+            {"1100", "1100"},
+            {"1101", "1101"},
+            {"1110", "1110"},
+            {"1111", "1111"}
+        };
 };
 #endif  
