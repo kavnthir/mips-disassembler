@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <bitset>
+#include <vector>
 
 enum InstructionFormat {MachineCode, AssemblyCode};
 
@@ -47,6 +49,9 @@ class Instruction{
          */
         bool convertInstruction();
 
+        int linenumber;
+        std::string label;
+        
     private:
 
         enum InstructionType {U, R, I, J};
@@ -150,7 +155,7 @@ class Instruction{
         std::map<std::string, std::string> functcon {
             {"100000", "add"},
             {"100001", "addu"},
-            {"011000", "and"},
+            {"100100", "and"},
             {"001000", "jr"},
             {"100111", "nor"},
             {"100101", "or"},
@@ -159,7 +164,7 @@ class Instruction{
             {"000000", "sll"},
             {"000010", "srl"},
             {"100010", "sub"},
-            {"010111", "subu"}
+            {"100011", "subu"}
         };
 };
 #endif  

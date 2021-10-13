@@ -8,6 +8,8 @@ Instruction::Instruction(){
     MC = "DNE";
     AC = "DNE";
     type = U;
+    linenumber = -1;
+    label = "N/A";
 }
 
 /**
@@ -57,7 +59,7 @@ std::string Instruction::getInstruction(InstructionFormat format){
  * @return true if successfully, false otherwise
  */
 bool Instruction::convertInstruction(){
-    // Classify instruction
+    // create variables holding bit ranges for each field
     std::string opcode = MC.substr(0, 6);
     std::string rs = MC.substr(6, 5);
     std::string rt = MC.substr(11, 5);
@@ -67,9 +69,13 @@ bool Instruction::convertInstruction(){
     std::string immediate = MC.substr(16, 16); //might be wrong
     std::string address = MC.substr(6, 26); //might be wrong
 
+    // Classify instruction
     if(opcode == "000000") type = R;
     else if(opcode == "000010" || opcode == "000011") type = J;
     else type = I; 
+
+    std::cout << "opcode: " << opcode << '\n';
+    std::cout << "functcode: " << funct << '\n';
 
     switch (type) {
     case R:
@@ -79,21 +85,36 @@ bool Instruction::convertInstruction(){
             AC += regcon.find(rs)->second + ", ";
             AC += regcon.find(rt)->second;
         }else{
-            //code if there is a shift amount.
+            AC = functcon.find(funct)->second + " ";
+            AC += regcon.find(rd)->second + ", ";
+            AC += regcon.find(rt)->second + ", ";
+            AC += convertRadix(shamt, 1); 
         }
         break;
     case I:
-        /* code */
-        AC = "ans";
+        AC = opcon.find(opcode)->second + " ";
+        if(opcode == "101011" || opcode == "100011"){
+            AC += regcon.find(rt)->second + ", ";
+            AC += convertRadix(immediate, 1);
+            AC += '(' + regcon.find(rs)->second + ')';          
+        }else if(opcode == "000100" || opcode == "000101"){
+            AC += regcon.find(rs)->second + ", ";
+            AC += regcon.find(rt)->second + ", ";
+            AC += "Addr_" + convertRadix(immediate, 2);
+            linenumber = 0;
+            label = convertRadix(immediate, 2);
+        }else{
+            AC += regcon.find(rt)->second + ", ";
+            AC += regcon.find(rs)->second + ", ";
+            AC += convertRadix(immediate, 1);
+        }
         break;
     case J:
         /* code */
         AC = "ans";
         break;
     case U:
-        /* code */
-        AC = "ans";
-        break;
+        return false;
     }
     return true;
 }
@@ -110,10 +131,9 @@ std::string Instruction::convertRadix(std::string input, int conversion){
         for(char &s: input) binary += xtob.find(s)->second;
         return binary;
     }else if(conversion == 1){
-        // convert binary to decimal
-        return "";
+        return std::to_string(std::stoll(input, nullptr, 2));
     }else{
         //convert decimal to hex
-        return "";
+        return "0000";
     }
 }

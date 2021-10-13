@@ -1,5 +1,7 @@
 #include "instruction.hpp"
 
+std::map<int, std::string> labels();
+
 bool disassemble(std::string filepath){
 	std::ifstream input (filepath);
 	std::string instruction;
@@ -9,6 +11,9 @@ bool disassemble(std::string filepath){
 			Instruction instruction(instruction, MachineCode);
 			instruction.convertInstruction();
 			output << '\t' << instruction.getInstruction(AssemblyCode) << '\n';
+			if(instruction.linenumber != -1){
+				
+			}
 		}
 		output.close();
 		input.close();
