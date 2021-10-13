@@ -104,7 +104,7 @@ bool Instruction::convertInstruction(){
             linenumber = PC + 1 + std::stoi(convertRadix(immediate, 1));
             label = "Addr_" + convertRadix(std::to_string(4 * (PC + 1 + std::stoi(convertRadix(immediate, 1)))), 2);
             AC += label; 
-            label += ':';
+            label += ":\n";
         }else{
             AC += regcon.find(rt)->second + ", ";
             AC += regcon.find(rs)->second + ", ";

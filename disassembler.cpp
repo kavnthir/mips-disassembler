@@ -1,21 +1,29 @@
 #include "instruction.hpp"
 
-std::map<int, std::string> labels;
-
 bool disassemble(std::string filepath){
 	std::ifstream input (filepath);
 	std::string instruction;
 	if(input.is_open()){
 		std::ofstream output (filepath.substr(0, filepath.find(".obj")) +".s");
+		std::map<int, std::string> labels;
+		std::vector<std::string> lines;
 		int PC = 0;
 		while(std::getline(input,instruction)){
 			Instruction instruction(instruction, MachineCode, PC);
 			instruction.convertInstruction();
-			output << '\t' << instruction.getInstruction(AssemblyCode) << '\n';
+			lines.push_back('\t' + instruction.getInstruction(AssemblyCode) + '\n');
 			if(instruction.linenumber != -1){
 				labels.insert({instruction.linenumber, instruction.label});
 			}
 			PC++;
+		}
+		int offset = 0;
+		for(auto it = labels.cbegin(); it != labels.cend(); ++it) {
+			lines.insert(lines.begin() + it->first + offset, it->second);
+			offset++;
+		}
+		for(int i = 0; i < lines.size(); i++){
+			output << lines[i];
 		}
 		output.close();
 		input.close();
@@ -23,10 +31,6 @@ bool disassemble(std::string filepath){
 	}else{
 		return false;
 	}
-}
-
-void labler(){
-	//function that takes datastructures of array locations and inserts them in to output file.
 }
 
 int main(int argc, char* argv[]){
