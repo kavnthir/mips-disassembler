@@ -71,7 +71,6 @@ bool Instruction::convertInstruction(){
     std::string shamt = MC.substr(21, 5);
     std::string funct = MC.substr(26, 6);
     std::string immediate = MC.substr(16, 16);
-    std::string address = MC.substr(6, 26); //might be wrong
 
     // Classify instruction
     if(opcode == "000000") type = R;
@@ -80,6 +79,11 @@ bool Instruction::convertInstruction(){
 
     switch (type) {
     case R:
+        if(functcon.find(funct) == functcon.end()) return false;
+        if(regcon.find(rd) == regcon.end()) return false;
+        if(regcon.find(rs) == regcon.end()) return false;
+        if(regcon.find(rt) == regcon.end()) return false;
+
         if(shamt == "00000"){
             AC = functcon.find(funct)->second + " ";
             AC += regcon.find(rd)->second + ", ";
@@ -93,6 +97,10 @@ bool Instruction::convertInstruction(){
         }
         break;
     case I:
+        if(opcon.find(opcode) == opcon.end()) return false;
+        if(regcon.find(rt) == regcon.end()) return false;
+        if(regcon.find(rs) == regcon.end()) return false;
+
         AC = opcon.find(opcode)->second + " ";
         if(opcode == "101011" || opcode == "100011"){
             AC += regcon.find(rt)->second + ", ";
@@ -112,8 +120,7 @@ bool Instruction::convertInstruction(){
         }
         break;
     case J:
-        /* code */
-        AC = "ans";
+        AC = "jump not supported";
         break;
     case U:
         return false;
