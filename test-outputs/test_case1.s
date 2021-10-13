@@ -1,1 +1,1 @@
-this should print to file
+	add	$t1, $t2, $t3

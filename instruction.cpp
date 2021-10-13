@@ -59,39 +59,43 @@ std::string Instruction::getInstruction(InstructionFormat format){
 bool Instruction::convertInstruction(){
     // Classify instruction
     std::string opcode = MC.substr(0, 6);
-    if(opcode == "000000"){
+    std::string rs = MC.substr(6, 5);
+    std::string rt = MC.substr(11, 5);
+    std::string rd = MC.substr(16, 5);
+    std::string shamt = MC.substr(21, 5);
+    std::string funct = MC.substr(26, 6);
+    std::string immediate = MC.substr(16, 16); //might be wrong
+    std::string address = MC.substr(6, 26); //might be wrong
 
-    }else if(opcode == "010001"){
-
-    }else{
-
-    }
-    // opcode = opcon.find(opcode)->second;
-
-    AC = "this is a commit :))";
-    return true;
+    if(opcode == "000000") type = R;
+    else if(opcode == "000010" || opcode == "000011") type = J;
+    else type = I; 
 
     switch (type) {
     case R:
-        /* code */
-        break;
-    case R0:
-        /* code */
-        break;
-    case R17:
-        /* code */
+        if(shamt == "00000"){
+            AC = functcon.find(funct)->second + " ";
+            AC += regcon.find(rd)->second + ", ";
+            AC += regcon.find(rs)->second + ", ";
+            AC += regcon.find(rt)->second;
+        }else{
+            //code if there is a shift amount.
+        }
         break;
     case I:
         /* code */
+        AC = "ans";
         break;
     case J:
         /* code */
+        AC = "ans";
         break;
     case U:
         /* code */
+        AC = "ans";
         break;
     }
-    return false;
+    return true;
 }
 
 /**
