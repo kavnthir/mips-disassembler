@@ -13,5 +13,5 @@ cmake .\CMakeLists.txt
 cmake --build .
 
 # Executing
-.\Debug\myDisassembler.exe *.obj *.s
+.\Debug\myDisassembler.exe *.obj
 ```
